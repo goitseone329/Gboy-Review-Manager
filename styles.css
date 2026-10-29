@@ -1,13 +1,9 @@
-input:focus, textarea:focus {
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.05);
-}
-::-webkit-scrollbar {
-    width: 6px;
-}
-::-webkit-scrollbar-track {
-    background: #0f172a;
-}
-::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 10px;
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gboy Review Manager AI</title>
+    <!-- Updated working Tailwind script -->
+    <script src="https://unpkg.com"></script>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="styles.css">
+</head>
