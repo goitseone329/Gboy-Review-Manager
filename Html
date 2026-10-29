@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gboy Review Manager AI</title>
+    <script src="https://tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="bg-cyan-500 text-slate-950 p-2 rounded-lg font-black tracking-wider text-xs">GB</div>
+            <h1 class="font-bold text-lg text-slate-200">Gboy <span class="text-cyan-400 font-medium">Review AI</span></h1>
+        </div>
+        <div id="licenseBadge" class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5">
+            <i class="fa-solid fa-crown text-[10px]"></i> Free Tier
+        </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 space-y-6">
+
+        <!-- Input Processing Area -->
+        <section class="bg-slate-800/40 border border-slate-800 rounded-2xl p-5 space-y-4 backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+                <h2 class="font-semibold text-slate-300 flex items-center gap-2">
+                    <i class="fa-solid fa-file-import text-cyan-400"></i> Paste Raw Review
+                </h2>
+                <button id="clearInputBtn" class="text-xs text-slate-500 hover:text-slate-300 transition">Clear</button>
+            </div>
+            <textarea id="rawReviewInput" placeholder="Paste the text of the customer review or complaint here..." class="w-full h-32 bg-slate-950/60 border border-slate-800 rounded-xl p-3.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 resize-none transition"></textarea>
+            
+            <button id="generateBtn" class="w-full bg-cyan-500 hover:bg-cyan-400 active:bg-cyan-600 text-slate-950 font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition duration-200 shadow-lg shadow-cyan-500/10">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI Corporate Response
+            </button>
+        </section>
+
+        <!-- AI Generated Output -->
+        <section id="outputSection" class="bg-slate-800/40 border border-slate-800 rounded-2xl p-5 space-y-4 backdrop-blur-sm hidden">
+            <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-emerald-400 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check"></i> Draft Response Generated
+                </h3>
+                <button id="copyOutputBtn" class="bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 px-3 py-1.5 rounded-lg hover:bg-slate-800 flex items-center gap-1.5 transition">
+                    <i class="fa-regular fa-copy"></i> Copy Reply
+                </button>
+            </div>
+            <div id="aiOutputContainer" class="w-full bg-slate-950 border border-slate-800/80 rounded-xl p-4 text-sm text-slate-300 leading-relaxed whitespace-pre-wrap"></div>
+        </section>
+
+        <!-- Advanced Features Block -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Negative Alert Panel -->
+            <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4">
+                <div class="space-y-1">
+                    <h3 class="font-semibold text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-bell text-rose-400"></i> Negative Review Alerts
+                    </h3>
+                    <p class="text-xs text-slate-500 leading-normal">Get an automated instant email notification the second a low-rating review is received by your business listing.</p>
+                </div>
+                <div class="flex items-center justify-between bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl">
+                    <span class="text-xs text-slate-400">Email alerts status:</span>
+                    <label class="relative inline-flex items-center cursor-not-allowed opacity-50">
+                        <input type="checkbox" disabled class="sr-only peer">
+                        <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-slate-400 after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-500"></div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pro Subscription Panel -->
+            <div id="monetizationCard" class="bg-gradient-to-br from-slate-800/40 to-cyan-950/20 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4 relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-cyan-500/10 blur-2xl rounded-full"></div>
+                <div class="space-y-1">
+                    <h3 class="font-semibold text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-gem text-cyan-400"></i> Unlock Pro License
+                    </h3>
+                    <p class="text-xs text-slate-500 leading-normal">Get infinite generation outputs, remove watermarks, and enable backend automatic daily review scrapers.</p>
+                </div>
+                <button id="checkoutBtn" class="w-full bg-slate-900 border border-slate-800 hover:border-cyan-500/30 hover:bg-slate-800/60 text-slate-200 font-medium py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition duration-200">
+                    Upgrade to Premium (R350.00)
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Error/Notification Popup -->
+    <div id="toastNotification" class="fixed bottom-4 right-4 bg-slate-950 border border-rose-500/40 text-rose-400 text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 max-w-sm hidden transform translate-y-10 transition duration-300">
+        <i class="fa-solid fa-circle-exclamation text-sm"></i>
+        <span id="toastMessage">An error occurred.</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
